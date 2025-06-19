@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Try-On Preview</title>
+</head>
+<body>
+  <h2 style="text-align: center;">Try-On Preview</h2>
+
+  <div style="display: flex; justify-content: center;">
+    <video id="tryon-video" width="300" height="500" autoplay muted loop>
+      <source id="video-source" src="" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <div style="margin-top: 20px; text-align: center;">
+    <button onclick="downloadVideo()">Download Try-On Video</button>
+  </div>
+
+  <script>
+    // Read avatar from query param
+    const params = new URLSearchParams(window.location.search);
+    const avatar = params.get("avatar") || "plus-female";
+
+    // Set video src dynamically
+    const videoSrc = `videos/${avatar}.mp4`;
+    document.getElementById("video-source").src = videoSrc;
+    document.getElementById("tryon-video").load();
+
+    // Download video
+    function downloadVideo() {
+      const a = document.createElement('a');
+      a.href = videoSrc;
+      a.download = `${avatar}-tryon.mp4`;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
+</body>
+</html>
